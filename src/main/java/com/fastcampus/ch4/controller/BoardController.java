@@ -162,9 +162,10 @@ public class BoardController {
 	
 	
 	private boolean loginCheck(HttpServletRequest request) {
-		// 1. 세션을 얻어서
+		// 1. 세션을 얻어서(false는 session이 없어도 새로 생성하지 않는다. 반환값 null)
 		HttpSession session = request.getSession(false);
 		// 2. 세션에 id가 있는지 확인, 있으면 true를 반환
-		    return session.getAttribute("id")!=null;
+		//    앞에 session만 따로 체크하는 이유는 session이 null일 때 뒤의 getAttribute에서 널포인트 익셉션이 발생할 수 있기 때문이다.
+		    return session!=null && session.getAttribute("id")!=null;
 	}
 }
